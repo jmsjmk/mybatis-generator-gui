@@ -26,6 +26,7 @@ public class MainUI extends Application {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("fxml/MainUI.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
 		Parent root = fxmlLoader.load();
+		primaryStage.setTitle("mybatis-generator-gui");
 		primaryStage.setResizable(true);
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
