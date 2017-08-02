@@ -95,7 +95,7 @@
                                         </TextField>
                                         <Label text="Java实体类名" GridPane.rowIndex="1"/>
                                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.columnSpan="3"
-                                              GridPane.rowIndex="1" GridPane.valignment="CENTER" >
+                                              GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                             <children>
                                                 <TextField fx:id="domainObjectNameField" prefHeight="27.0"
                                                            prefWidth="154.0" promptText="Person"
