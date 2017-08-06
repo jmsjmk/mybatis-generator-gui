@@ -58,6 +58,11 @@ public class ConfigHelper {
 
 	}
 
+	/**
+	 *  载入数据库的配置，就是对应的schme
+	 * @return
+	 * @throws Exception
+     */
 	public static List<DatabaseConfig> loadDatabaseConfig() throws Exception {
 		Connection conn = null;
 		Statement stat = null;

@@ -89,6 +89,14 @@ public class MainUIController extends BaseFXController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /**
+         * connectionLabel 标签(数据库连接按钮)
+         *
+         * 鼠标单机事件促发一个controller,同样是载入一个配置连接
+         *
+         * 点击的时候弹出来一个对话框
+         *
+         */
         ImageView dbImage = new ImageView("icons/computer.png");
         dbImage.setFitHeight(40);
         dbImage.setFitWidth(40);
@@ -98,6 +106,10 @@ public class MainUIController extends BaseFXController {
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
+
+        /**
+         * 类似上面的功能
+         */
         ImageView configImage = new ImageView("icons/config-list.png");
         configImage.setFitHeight(40);
         configImage.setFitWidth(40);
@@ -108,8 +120,15 @@ public class MainUIController extends BaseFXController {
             controller.showDialogStage();
         });
 
+        /**
+         * 中间就是左侧的树结构，设置显示根很重要，这样看着会向多棵树
+         *
+         */
         leftDBTree.setShowRoot(false);
         leftDBTree.setRoot(new TreeItem<>());
+        /**
+         * 单元格工厂，单元格工厂是用来为TreeView生成一个TreeCell实例，这个实例就代表一个TreeItem
+         */
         Callback<TreeView<String>, TreeCell<String>> defaultCellFactory = TextFieldTreeCell.forTreeView();
         leftDBTree.setCellFactory((TreeView<String> tv) -> {
             TreeCell<String> cell = defaultCellFactory.call(tv);
@@ -117,6 +136,7 @@ public class MainUIController extends BaseFXController {
                 int level = leftDBTree.getTreeItemLevel(cell.getTreeItem());
                 TreeCell<String> treeCell = (TreeCell<String>) event.getSource();
                 TreeItem<String> treeItem = treeCell.getTreeItem();
+                // 这个地方主要是针对右键
                 if (level == 1) {
                     final ContextMenu contextMenu = new ContextMenu();
                     MenuItem item1 = new MenuItem("关闭连接");
@@ -142,10 +162,12 @@ public class MainUIController extends BaseFXController {
                     contextMenu.getItems().addAll(item1, item2, item3);
                     cell.setContextMenu(contextMenu);
                 }
+                // 针对于双击事件
                 if (event.getClickCount() == 2) {
                     treeItem.setExpanded(true);
                     if (level == 1) {
-                        System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
+                        // System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
+                        // 双击数据库标题的那个节点信息，是在loadtree时候设置进去的
                         DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         try {
                             List<String> tables = DbUtil.getTableNames(selectedConfig);
@@ -170,6 +192,7 @@ public class MainUIController extends BaseFXController {
                             AlertUtil.showErrorAlert(e.getMessage());
                         }
                     } else if (level == 2) { // left DB tree level3
+                        // 操作叶子节点
                         String tableName = treeCell.getTreeItem().getValue();
                         selectedDatabaseConfig = (DatabaseConfig) treeItem.getParent().getGraphic().getUserData();
                         this.tableName = tableName;
@@ -180,9 +203,15 @@ public class MainUIController extends BaseFXController {
             });
             return cell;
         });
+        // 初始化的时候 先要载入数据
         loadLeftDBTree();
     }
 
+    /**
+     * 数据结构存放在了一个数据库中，找出对应的我们设置时候的名字。显示出来
+     *
+     * 它使用的sqlite这种简单的数据库。其实就是一个jar包根
+     */
     void loadLeftDBTree() {
         TreeItem rootTreeItem = leftDBTree.getRoot();
         rootTreeItem.getChildren().clear();
@@ -194,6 +223,7 @@ public class MainUIController extends BaseFXController {
                 ImageView dbImage = new ImageView("icons/computer.png");
                 dbImage.setFitHeight(16);
                 dbImage.setFitWidth(16);
+                // 这个就是数据库的配置信息
                 dbImage.setUserData(dbConfig);
                 treeItem.setGraphic(dbImage);
                 rootTreeItem.getChildren().add(treeItem);
@@ -314,6 +344,9 @@ public class MainUIController extends BaseFXController {
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
     }
 
+    /**
+     * 点击定制咧
+     */
     @FXML
     public void openTableColumnCustomizationPage() {
         if (tableName == null) {

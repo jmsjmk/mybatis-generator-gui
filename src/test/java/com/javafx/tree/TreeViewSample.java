@@ -1,22 +1,20 @@
 package com.javafx.tree;
 
 import javafx.application.Application;
-import javafx.scene.Node;  
-import javafx.scene.Scene;  
+import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;  
 import javafx.scene.control.TreeView;  
-import javafx.scene.image.Image;  
-import javafx.scene.image.ImageView;  
-import javafx.scene.layout.StackPane;  
-import javafx.stage.Stage;  
-   
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+/**
+ * stage--舞台
+ * scene--场景
+ * Pane-- 窗口布局
+ */
 public class TreeViewSample extends Application {  
    
-//    private final Node rootIcon = new ImageView(
-//        new Image(getClass().getResourceAsStream("folder_16.png"))
-//    );
-   
-    public static void main(String[] args) {  
+    public static void main(String[] args) {
         launch(args);  
     }  
       
@@ -35,7 +33,7 @@ public class TreeViewSample extends Application {
         // 树的view组建
         TreeView<String> tree = new TreeView<> (rootItem);
 
-
+        //
         StackPane root = new StackPane();  
         root.getChildren().add(tree);  
         primaryStage.setScene(new Scene(root, 300, 250));  
