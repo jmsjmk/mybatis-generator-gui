@@ -44,9 +44,10 @@ public class TreeViewSample1 extends Application {
         // 树的view组建
         TreeView<String> tree = new TreeView<> (rootItem);
         TreeView<String> tree1 = new TreeView<> (rootItem1);
-
-
+        tree1.setRoot(rootItem1);
+        tree1.setShowRoot(false);
         GridPane root = new GridPane();
+
         root.getChildren().add(tree);
         root.getChildren().add(tree1);
         primaryStage.setScene(new Scene(root, 600, 250));
