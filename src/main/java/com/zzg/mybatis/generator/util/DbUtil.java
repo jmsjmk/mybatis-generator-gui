@@ -100,6 +100,10 @@ public class DbUtil {
 	}
 
     public static String getConnectionUrlWithSchema(DatabaseConfig dbConfig) throws ClassNotFoundException {
+		/**
+		 * jdbc:mysql://192.168.100.173:3306/mobile_metadb?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&allowMultiQueries=true
+		 * jdbc:mysql://192.168.1.100:3306/cyp?useUnicode=true&useSSL=false&characterEncoding=utf8
+		 */
 		DbType dbType = DbType.valueOf(dbConfig.getDbType());
 		String connectionUrl = String.format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getSchema(), dbConfig.getEncoding());
         _LOG.info("getConnectionUrlWithSchema, connection url: {}", connectionUrl);

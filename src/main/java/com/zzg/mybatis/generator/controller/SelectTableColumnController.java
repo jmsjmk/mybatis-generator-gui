@@ -69,7 +69,13 @@ public class SelectTableColumnController extends BaseFXController {
     public void ok() {
         ObservableList<UITableColumnVO> items = columnListView.getItems();
         if (items != null && items.size() > 0) {
+            /**
+             * 忽略的列
+             */
             List<IgnoredColumn> ignoredColumns = new ArrayList<>();
+            /**
+             * 覆盖的列
+             */
             List<ColumnOverride> columnOverrides = new ArrayList<>();
             items.stream().forEach(item -> {
                 if (!item.getChecked()) {

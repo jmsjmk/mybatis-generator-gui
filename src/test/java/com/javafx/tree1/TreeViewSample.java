@@ -1,4 +1,4 @@
-package com.javafx.tree2;
+package com.javafx.tree1;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,23 +11,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+ 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.VBox;
-
+ 
 public class TreeViewSample extends Application {
-
-//    private final Node rootIcon =
-//            new ImageView(new Image(getClass().getResourceAsStream("root.png")));
-//    private final Image depIcon =
-//            new Image(getClass().getResourceAsStream("department.png"));
-
-
-
-
+ 
     List<Employee> employees = Arrays.<Employee>asList(
             new Employee("Jacob Smith", "Accounts Department"),
-            new Employee("Isabella Johnson", "Accounts Department"),
+            new Employee("Isabella Johnson", "Accounts Department"),           
             new Employee("Ethan Williams", "Sales Department"),
             new Employee("Emma Jones", "Sales Department"),
             new Employee("Michael Brown", "Sales Department"),
@@ -38,23 +30,19 @@ public class TreeViewSample extends Application {
             new Employee("Judy Mayer", "IT Support"),
             new Employee("Gregory Smith", "IT Support"));
     TreeItem<String> rootNode;
-
+ 
     public static void main(String[] args) {
         launch(args);
     }
-
+ 
     public TreeViewSample() {
         this.rootNode = new TreeItem<>("MyCompany Human Resources", null);
     }
-
+ 
     @Override
     public void start(Stage stage) {
         rootNode.setExpanded(true);
-        System.out.println("dd");
         for (Employee employee : employees) {
-            /**
-             * 建立一个,员工节点
-             */
             TreeItem<String> empLeaf = new TreeItem<>(employee.getName());
             boolean found = false;
             for (TreeItem<String> depNode : rootNode.getChildren()) {
@@ -64,47 +52,49 @@ public class TreeViewSample extends Application {
                     break;
                 }
             }
+            System.out.println("dd");
             if (!found) {
-                TreeItem<String> depNode = new TreeItem<>(employee.getDepartment(),null);
+                TreeItem<String> depNode = new TreeItem<>(
+                    employee.getDepartment(), null);
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(empLeaf);
             }
         }
-
+ 
         stage.setTitle("Tree View Sample");
         VBox box = new VBox();
         final Scene scene = new Scene(box, 400, 300);
-        scene.setFill(Color.LIGHTGRAY);
-
+        scene.setFill(Color.RED);
+ 
         TreeView<String> treeView = new TreeView<>(rootNode);
-        treeView.setShowRoot(false);
+        
         box.getChildren().add(treeView);
         stage.setScene(scene);
         stage.show();
     }
-
+ 
     public static class Employee {
-
+ 
         private final SimpleStringProperty name;
         private final SimpleStringProperty department;
-
+ 
         private Employee(String name, String department) {
             this.name = new SimpleStringProperty(name);
             this.department = new SimpleStringProperty(department);
         }
-
+ 
         public String getName() {
             return name.get();
         }
-
+ 
         public void setName(String fName) {
             name.set(fName);
         }
-
+ 
         public String getDepartment() {
             return department.get();
         }
-
+ 
         public void setDepartment(String fName) {
             department.set(fName);
         }
